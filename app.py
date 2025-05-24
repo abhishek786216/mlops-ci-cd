@@ -15,7 +15,7 @@ model.fit(X, y)
 st.title("Iris Species Predictor")
 
 # User inputs
-sepal_length = st.number_input("Sepal Length (cm)", 4.0, 8.0, 5.0)
+sepal_length = st.number_input("Sepal Length (cm)", 5.0, 8.0, 5.0)
 sepal_width = st.number_input("Sepal Width (cm)", 2.0, 4.5, 3.0)
 petal_length = st.number_input("Petal Length (cm)", 1.0, 7.0, 1.5)
 petal_width = st.number_input("Petal Width (cm)", 0.1, 2.5, 0.2)
