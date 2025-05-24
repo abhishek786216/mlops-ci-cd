@@ -1,18 +1,32 @@
 import streamlit as st
+from sklearn.datasets import load_iris
+from sklearn.ensemble import RandomForestClassifier
+import numpy as np
+
+# Load dataset
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# Train model (in real app you’d load a saved model)
+model = RandomForestClassifier()
+model.fit(X, y)
 
 # Streamlit UI
-st.title("Power Calculator")
-st.write("Enter a number to calculate its square, cube, and fifth power.")
+st.title("Iris Species Predictor")
 
-# Get user input
-n = st.number_input("Enter an integer", value=1, step=1)
+# User inputs
+sepal_length = st.number_input("Sepal Length (cm)", 4.0, 8.0, 5.0)
+sepal_width = st.number_input("Sepal Width (cm)", 2.0, 4.5, 3.0)
+petal_length = st.number_input("Petal Length (cm)", 1.0, 7.0, 1.5)
+petal_width = st.number_input("Petal Width (cm)", 0.1, 2.5, 0.2)
 
-# Calculate results
-square = n ** 2
-cube = n ** 3
-fifth_power = n ** 5
+# Prediction function
+def predict_species(features):
+    features = np.array(features).reshape(1, -1)
+    pred_idx = model.predict(features)[0]
+    return iris.target_names[pred_idx]
 
-# Display results
-st.write(f"The square of {n} is: {square}")
-st.write(f"The cube of {n} is: {cube}")
-st.write(f"The fifth power of {n} is: {fifth_power}")
+if st.button("Predict"):
+    features = [sepal_length, sepal_width, petal_length, petal_width]
+    prediction = predict_species(features)
+    st.success(f"The predicted iris species is: **{prediction}**")
